@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script>
+        function functie() {
+            // Voornaam ophalen
+            let voornaam = document.getElementById("voornaam").value;
+
+            // Geboortedatum ophalen en geboortejaar en geboortemaand er uit halen
+            let geboortedatum = (document.getElementById("geboortedatum").value).toString();
+            let geboortemaand = parseInt(geboortedatum.substring(5, 7));
+            let geboortejaar = parseInt(geboortedatum.substring(0, 4));
+            
+            // Geboortemaand omzetten van getal naar tekst
+            let maand;
+            switch (geboortemaand) {
+                case 1: maand = "januari"; break;
+                case 2: maand = "februari"; break;
+                case 3: maand = "maart"; break;
+                case 4: maand = "april"; break;
+                case 5: maand = "mei"; break;
+                case 6: maand = "juni"; break;
+                case 7: maand = "juli"; break;
+                case 8: maand = "augustus"; break;
+                case 9: maand = "september"; break;
+                case 10: maand = "oktober"; break;
+                case 11: maand = "november"; break;
+                case 12: maand = "december"; break;
+            }
+
+            // Bepalen of geboortejaar een schrikkeljaar is
+            let schrikkeljaar;
+            if (geboortejaar % 4 == 0) {
+                if (geboortejaar % 400 == 0) {
+                    schrikkeljaar = "een schrikkeljaar";
+                }
+                else if (geboortejaar % 100 == 0) {
+                    schrikkeljaar = "geen schrikkeljaar";
+                }
+                else {
+                    schrikkeljaar = "een schrikkeljaar";
+                }
+            }
+            else {
+                    schrikkeljaar = "geen schrikkeljaar";
+            }
+
+            let zin1 = voornaam + " is geboren in de maand " + maand + " in " + geboortejaar + ". Dit is " + schrikkeljaar + ". <br>"
+            
+            // Klas ophalen en jaar eruit halen    
+            let klas = document.getElementById("klas").value;
+            let jaar = klas[0];
+            
+            // Graad bepalen 
+            let graad;
+            if (jaar == 1 || jaar == 2) {
+                graad = 1;
+            }
+            else if (jaar == 3 || jaar == 4) {
+                graad = 2;
+            }
+            else {
+                graad = 3;
+            }
+
+            // Pijler bepalen
+            let pijler;
+            if (klas[1] == "E") {
+                pijler = "Engineering";
+            }
+            else if (klas[1] == "B") {
+                pijler = "Business";
+            }
+            else if (klas[1] == "S") {
+                pijler = "Sports";
+            }
+            else if (klas[1] == "A") {
+                pijler = "Art en Design";
+            }
+            else if (klas[1] == "P") {
+                pijler = "People";
+            }
+            else {
+                pijler = "Ongeldig";
+            }
+
+            let zin2 = voornaam + " zit in de " + graad + "<sup>e</sup> graad, meer bepaald in het "
+                + jaar + "<sup>e</sup> middelbaar in de pijler " + pijler + ". <br>";
+
+            // Vak ophalen en leerkracht bepalen
+            let vak = document.getElementById("Specifiek vak").value;
+            let zin3;
+            if (vak == "Netwerken" || vak == "Webdesign" || vak == "Programmeren") {
+                zin3 = "Het specifieke vak \"" + vak + "\" wordt gegeven door leerkracht 1. <br>";
+            }
+            else if (vak == "Databases" || vak == "Kantoorsoftware") {
+                zin3 = "Het specifieke vak \"" + vak + "\" wordt gegeven door leerkracht 2. <br>";
+            }
+            else {
+                zin3= "Je hebt geen specifiek vak geselecteerd. <br>"
+            }
+            
+            // Alle info afdrukken
+            document.getElementById("uitvoer").innerHTML = zin1 + zin2 + zin3;
+        }
+    </script>
+</head >
+<body>
+    <form enctype="text/plain" method="post" action="mailto:bvanhee@ktabrugge.be?subject=Examen%201%20webdesign.">
+        <fieldset>
+            <legend>Labo webdesign</legend>
+
+            <!-- Voornaam, klas en geboortedatum-->
+            <table>
+                <tr>
+                    <td>
+                        <label for="voornaam">Voornaam: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="voornaam" name="Voornaam" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="klas">Klas: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="klas" name="Klas" maxlength="2" pattern="[1-7]{1}[ABEPS]{1}" placeholder="4E" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="geboortedatum">Geboortedatum: </label>
+                    </td>
+                    <td>
+                        <input type="date" id="geboortedatum" name="Geboortedatum" required>
+                    </td>
+                </tr>
+            </table> <br />
+            
+            <!-- Specifieke vakken -->
+            <label for="Specifiek vak">Specifieke vakken</label><br />
+            <select name="Specifiek vak" id="Specifiek vak" size="7" required>
+                <optgroup label="Leerkracht 1">
+                    <option value="Netwerken">Netwerken</option>
+                    <option value="Webdesign">Webdesign</option>
+                    <option value="Programmeren">Programmeren</option>
+                </optgroup>
+                <optgroup label="Leerkracht 2">
+                    <option value="Databases">Databases</option>
+                    <option value="Kantoorsoftware">Kantoorsoftware</option>
+                </optgroup>
+            </select><br /><br />
+
+            <input type="button" value="Klik hier" onclick="functie()"> <br />
+            <p id="uitvoer"></p>
+        </fieldset>
+    </form>
+</body>
+</html>
